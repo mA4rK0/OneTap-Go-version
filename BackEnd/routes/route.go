@@ -31,7 +31,7 @@ func Setup(app *fiber.App,
 	}))
 
 	userGroup := api.Group("/users")
-	userGroup.Get("/page", uc.GetUserPagination)
+	// userGroup.Get("/page", uc.GetUserPagination)
 	userGroup.Get("/:id", uc.GetUser)
 	userGroup.Put("/:id", uc.UpdateUser)
 	userGroup.Delete("/:id", uc.DeleteUser)
