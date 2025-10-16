@@ -50,7 +50,7 @@ func (c *UserController) Login (ctx *fiber.Ctx) error {
 		return utils.Unauthorized(ctx, "Login Failed", err.Error())
 	}
 
-	token, _ := utils.GenerateToken(user.InternalID, user.Role, user.Email, user.PublicID)
+	token, _ := utils.GenerateToken(user.InternalID, user.Email, user.PublicID)
 	refreshToken, _ := utils.GenerateRefreshToken(user.InternalID)
 
 	var userResp models.UserResponse

@@ -17,3 +17,12 @@ type User struct {
 	UpdatedAt  time.Time	`json:"updated_at" db:"updated_at"`
 	DeletedAt  gorm.DeletedAt `json:"-" gorm:"index"` // "soft" delete in database, cannot return deleted data
 }
+
+type UserResponse struct {
+	PublicID   uuid.UUID `json:"public_id"`
+	Name       string `json:"name"`
+	Email      string `json:"email"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	DeletedAt gorm.DeletedAt `json:"-"`
+}
