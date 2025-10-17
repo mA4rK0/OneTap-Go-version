@@ -5,7 +5,6 @@ CREATE TABLE profiles (
   user_public_id UUID NOT NULL,
   avatar TEXT,
   username VARCHAR(255) UNIQUE NOT NULL,
-  name VARCHAR(255) NOT NULL,
   category VARCHAR(255),
   theme_name VARCHAR(255) NOT NULL DEFAULT 'default',
   bg_colour VARCHAR(255) NOT NULL DEFAULT '#FFFFFF',
@@ -21,4 +20,4 @@ CREATE TABLE profiles (
     FOREIGN KEY (user_public_id)
       REFERENCES users(public_id)
       ON DELETE CASCADE
-)
+);
