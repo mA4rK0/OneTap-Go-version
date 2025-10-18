@@ -25,13 +25,17 @@ func main() {
 	profileService := services.NewProfileService(profileRepo, userRepo)
 	profileController := controllers.NewProfileController(profileService)
 
+	socialLinkRepo := repositories.NewSocialLinkRepository()
+	socialLinkService := services.NewSocialLinkService(socialLinkRepo, profileRepo)
+	socialLinkController := controllers.NewSocialLinkController(socialLinkService)
+
 	// boardRepo := repositories.NewBoardRepository()
 	// boardMemberRepo := repositories.NewBoardMemberRepository()
 	// boardService := services.NewBoardService(boardRepo, userRepo, boardMemberRepo)
 	// boardController := controllers.NewBoardController(boardService)
 
 	// routes.Setup(app, userController, boardController)
-	routes.Setup(app, userController, profileController)
+	routes.Setup(app, userController, profileController, socialLinkController)
 
 	port := config.AppConfig.AppPort
 	log.Println("Server running on port :", port)

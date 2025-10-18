@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 CREATE TABLE profiles (
   internal_id BIGSERIAL PRIMARY KEY,
   public_id UUID NOT NULL DEFAULT gen_random_uuid(),

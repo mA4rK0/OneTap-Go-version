@@ -14,6 +14,7 @@ import (
 func Setup(app *fiber.App, 
 	uc *controllers.UserController,
 	pc *controllers.ProfileController,
+	sc *controllers.SocialLinkController,
 	) {
 	err := godotenv.Load()
 	if err != nil {
@@ -39,6 +40,7 @@ func Setup(app *fiber.App,
 	profileGroup := api.Group("/profiles")
 	profileGroup.Post("/", pc.CreateProfile)
 	profileGroup.Put("/:id", pc.UpdateProfile)
+	profileGroup.Post("/:profileId/social-links", sc.CreateSocialLinks)
 	// boardGroup.Post("/", bc.CreateBoard)
 	// boardGroup.Put("/:id", bc.UpdateBoard)
 	// boardGroup.Post("/:id/members", bc.AddBoardMembers)
