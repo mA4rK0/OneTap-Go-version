@@ -38,6 +38,7 @@ func Setup(app *fiber.App,
 
 	profileGroup := api.Group("/profiles")
 	profileGroup.Post("/", pc.CreateProfile)
+	profileGroup.Put("/:id", pc.UpdateProfile)
 	// boardGroup.Post("/", bc.CreateBoard)
 	// boardGroup.Put("/:id", bc.UpdateBoard)
 	// boardGroup.Post("/:id/members", bc.AddBoardMembers)
