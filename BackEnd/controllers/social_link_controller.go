@@ -51,3 +51,27 @@ func (c *SocialLinkController) CreateSocialLinks (ctx *fiber.Ctx) error {
 		SocialLinks:     socialLinksResponse,
 	})
 }
+
+func (c *SocialLinkController) GetSocialLinks(ctx *fiber.Ctx) error {
+	profileID := ctx.Params("profileId")
+	profilePublicID, err := uuid.Parse(profileID)
+	if err != nil {
+		return utils.BadRequest(ctx, "Invalid profile ID", err.Error())
+	}
+
+	position := ctx.Query("position", "")
+	socialLinks, err := c.service.GetSocialLinks(profilePublicID, position)
+	if err != nil {
+		return utils.InternalServerError(ctx, "Failed to get social links", err.Error())
+	}
+
+	var socialLinksResponse []models.SocialLinkResponse
+	if err := copier.Copy(&socialLinksResponse, &socialLinks); err != nil {
+		return utils.InternalServerError(ctx, "Error processing data", err.Error())
+	}
+
+	return utils.Success(ctx, "Social links retrieved successfully", models.SocialLinksResponse{
+		ProfilePublicID: profilePublicID,
+		SocialLinks:     socialLinksResponse,
+	})
+}
