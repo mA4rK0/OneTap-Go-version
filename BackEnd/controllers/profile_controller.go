@@ -78,3 +78,18 @@ func (c *ProfileController) UpdateProfile (ctx *fiber.Ctx) error {
 	} 
 	return utils.Success(ctx, "Successfully update profile", profileResp)
 }
+
+func (c *ProfileController) GetProfile (ctx *fiber.Ctx) error {
+	id := ctx.Params("id")
+	profile, err := c.service.GetByPublicID(id)
+	if err != nil {
+		return utils.NotFound(ctx, "Data Not Found", err.Error())
+	}
+
+	var useResp models.ProfileResponse
+	err = copier.Copy(&useResp, &profile)
+	if err != nil {
+		return utils.BadRequest(ctx, "Internal Server Error", err.Error())
+	}
+	return utils.Success(ctx, "Successfully Get Data", useResp)
+}

@@ -38,9 +38,10 @@ func Setup(app *fiber.App,
 	userGroup.Delete("/:id", uc.DeleteUser)
 
 	profileGroup := api.Group("/profiles")
+	profileGroup.Get("/:id", pc.GetProfile)
 	profileGroup.Post("/", pc.CreateProfile)
-	profileGroup.Put("/:id", pc.UpdateProfile)
 	profileGroup.Post("/:profileId/social-links", sc.CreateSocialLinks)
+	profileGroup.Put("/:id", pc.UpdateProfile)
 	// boardGroup.Post("/", bc.CreateBoard)
 	// boardGroup.Put("/:id", bc.UpdateBoard)
 	// boardGroup.Post("/:id/members", bc.AddBoardMembers)
