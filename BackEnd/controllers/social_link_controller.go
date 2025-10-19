@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
+	"github.com/jinzhu/copier"
 	"github.com/mA4rK0/OneTap-Go-version/models"
 	"github.com/mA4rK0/OneTap-Go-version/services"
 	"github.com/mA4rK0/OneTap-Go-version/utils"
@@ -16,23 +17,6 @@ func NewSocialLinkController(s services.SocialLinkService) *SocialLinkController
 	return &SocialLinkController{service: s}
 }
 
-func socialLinkResponse(socialLinks []models.SocialLink) []models.SocialLinkResponse {
-	var response []models.SocialLinkResponse
-	for _, link := range socialLinks {
-		response = append(response, models.SocialLinkResponse{
-			PublicID:        link.PublicID,
-			ProfilePublicID: link.ProfilePublicID,
-			Position:        link.Position,
-			Icon:            link.Icon,
-			Url:             link.Url,
-			Active:          link.Active,
-			Order:           link.Order,
-			CreatedAt:       link.CreatedAt,
-		})
-	}
-	return response
-}
-
 func (c *SocialLinkController) CreateSocialLinks (ctx *fiber.Ctx) error {
 	profileID := ctx.Params("profileId")
 	profilePublicID, err := uuid.Parse(profileID)
@@ -40,8 +24,9 @@ func (c *SocialLinkController) CreateSocialLinks (ctx *fiber.Ctx) error {
 	if err != nil {
 		return utils.BadRequest(ctx, "Invalid profile ID", err.Error())
 	}
-	var req models.SocialLinksRequest
-	if err := ctx.BodyParser(&req); err != nil {
+
+	req := new(models.SocialLinksRequest)
+	if err := ctx.BodyParser(req); err != nil {
 		return utils.BadRequest(ctx, "Failed to parse request", err.Error())
 	}
 	if len(req.SocialLinks) == 0 {
@@ -56,7 +41,10 @@ func (c *SocialLinkController) CreateSocialLinks (ctx *fiber.Ctx) error {
 		return utils.InternalServerError(ctx, "Failed to retrieve social links", err.Error())
 	}
 
-	socialLinksResponse := socialLinkResponse(socialLinks)
+	var socialLinksResponse []models.SocialLinkResponse
+	if err := copier.Copy(&socialLinksResponse, &socialLinks); err != nil {
+		return utils.InternalServerError(ctx, "Error processing data", err.Error())
+	}
 
 	return utils.Success(ctx, "Social links successfully created", models.SocialLinksResponse{
 		ProfilePublicID: profilePublicID,

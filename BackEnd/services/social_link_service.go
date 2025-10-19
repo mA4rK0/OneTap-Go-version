@@ -10,7 +10,7 @@ import (
 )
 
 type SocialLinkService interface{
-	CreateSocialLinks (profilePublicID uuid.UUID, req models.SocialLinksRequest) error
+	CreateSocialLinks (profilePublicID uuid.UUID, req *models.SocialLinksRequest) error
 	GetSocialLinks(profilePublicID uuid.UUID, position string) ([]models.SocialLink, error)
 }
 
@@ -26,7 +26,7 @@ func NewSocialLinkService(
 	return &socialLinkService{socialLinkRepo, profileRepo}
 }
 
-func (s *socialLinkService) CreateSocialLinks (profilePublicID uuid.UUID, req models.SocialLinksRequest) error {
+func (s *socialLinkService) CreateSocialLinks (profilePublicID uuid.UUID, req *models.SocialLinksRequest) error {
 	profile, err := s.profileRepo.FindByPublicID(profilePublicID.String())
 	if err != nil {
 		return errors.New("profile not found")

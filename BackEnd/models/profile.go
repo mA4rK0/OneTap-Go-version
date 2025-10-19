@@ -24,3 +24,20 @@ type Profile struct {
 	UserPublicID uuid.UUID `json:"user_public_id" db:"user_public_id" gorm:"column:user_public_id"`
 	CreatedAt  time.Time `json:"created_at" db:"created_at"`
 }
+
+type ProfileResponse struct {
+	Username   string `json:"username"`
+	Category   string `json:"category"`
+	Avatar     string `json:"avatar"`
+	ThemeName  string `json:"theme_name"`
+	BgColour   string `json:"bg_colour"`
+	UsernameColour string `json:"username_colour"`
+	BtnRound   string `json:"btn_round"`
+	BtnBgColour string `json:"btn_bg_colour"`
+	BtnTextColour string `json:"btn_text_colour"`
+	BtnOutlineColour string `json:"btn_outline_colour"`
+	IconColour string `json:"icon_colour"`
+	PublicID   uuid.UUID `json:"public_id"`
+	UserPublicID uuid.UUID `json:"user_public_id"`
+	CreatedAt  time.Time `json:"created_at"`
+}

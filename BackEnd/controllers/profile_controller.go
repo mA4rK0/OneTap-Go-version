@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 	"github.com/google/uuid"
+	"github.com/jinzhu/copier"
 	"github.com/mA4rK0/OneTap-Go-version/models"
 	"github.com/mA4rK0/OneTap-Go-version/services"
 	"github.com/mA4rK0/OneTap-Go-version/utils"
@@ -38,7 +39,12 @@ func (c *ProfileController) CreateProfile (ctx *fiber.Ctx) error {
 	if err := c.service.Create(profile); err != nil {
 		return utils.BadRequest(ctx, "Failed save data", err.Error())
 	}
-	return utils.Success(ctx, "Profile successfully created", profile)
+
+	var profileResp models.ProfileResponse
+	if err := copier.Copy(&profileResp, profile); err != nil {
+		return utils.InternalServerError(ctx, "Error processing data", err.Error())
+	}
+	return utils.Success(ctx, "Profile successfully created", profileResp)
 }
 
 func (c *ProfileController) UpdateProfile (ctx *fiber.Ctx) error {
@@ -65,5 +71,10 @@ func (c *ProfileController) UpdateProfile (ctx *fiber.Ctx) error {
 	if err := c.service.Update(profile); err != nil {
 		return utils.BadRequest(ctx, "Failed update profile", err.Error())
 	}
-	return utils.Success(ctx, "Successfully update profile", profile)
+
+	var profileResp models.ProfileResponse
+	if err := copier.Copy(&profileResp, profile); err != nil {
+		return utils.InternalServerError(ctx, "Error processing data", err.Error())
+	} 
+	return utils.Success(ctx, "Successfully update profile", profileResp)
 }
