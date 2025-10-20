@@ -43,6 +43,8 @@ func Setup(app *fiber.App,
 	profileGroup.Get("/:id", pc.GetProfile)
 	profileGroup.Post("/:profileId/social-links", sc.CreateSocialLinks)
 	profileGroup.Get("/:profileId/social-links", sc.GetSocialLinks)
+	profileGroup.Put("/:profileId/social-links", sc.UpdateSocialLinks)
+
 	// boardGroup.Post("/", bc.CreateBoard)
 	// boardGroup.Put("/:id", bc.UpdateBoard)
 	// boardGroup.Post("/:id/members", bc.AddBoardMembers)

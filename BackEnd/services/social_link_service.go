@@ -11,6 +11,7 @@ import (
 
 type SocialLinkService interface{
 	CreateSocialLinks (profilePublicID uuid.UUID, req *models.SocialLinksRequest) error
+	UpdateSocialLinks(profilePublicID uuid.UUID, req *models.SocialLinksRequest) error
 	GetSocialLinks(profilePublicID uuid.UUID, position string) ([]models.SocialLink, error)
 }
 
@@ -57,4 +58,33 @@ func (s *socialLinkService) GetSocialLinks(profilePublicID uuid.UUID, position s
 		return s.socialLinkRepo.GetByProfileIDAndPosition(profilePublicID, position)
 	}
 	return s.socialLinkRepo.GetByProfileID(profilePublicID)
+}
+
+func (s *socialLinkService) UpdateSocialLinks(profilePublicID uuid.UUID, req *models.SocialLinksRequest) error {
+	profile, err := s.profileRepo.FindByPublicID(profilePublicID.String())
+	if err != nil {
+		return errors.New("profile not found")
+	}
+
+	exists, err := s.socialLinkRepo.CheckExists(profilePublicID, req.Position)
+	if err != nil {
+		return err
+	}
+	if !exists {
+		return errors.New("social links not found for this profile and position")
+	}
+
+	var socialLinks []models.SocialLink
+	for _, linkReq := range req.SocialLinks {
+		socialLinks = append(socialLinks, models.SocialLink{
+			ProfileID:       profile.InternalID,
+			ProfilePublicID: profilePublicID,
+			Position:        req.Position,
+			Icon:            linkReq.Icon,
+			Url:             linkReq.Url,
+			Active:          linkReq.Active,
+			Order:           linkReq.Order,
+		})
+	}
+	return s.socialLinkRepo.Update(profilePublicID, req.Position, socialLinks)
 }

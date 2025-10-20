@@ -11,6 +11,7 @@ import (
 
 type SocialLinkRepository interface{
 	Create(profilePublicID uuid.UUID, position string, socialLinks []models.SocialLink) error
+	Update(profilePublicID uuid.UUID, position string, socialLinks []models.SocialLink) error
 	CheckExists(profilePublicID uuid.UUID, position string) (bool, error)
 	GetByProfileID(profilePublicID uuid.UUID) ([]models.SocialLink, error)
 	GetByProfileIDAndPosition(profilePublicID uuid.UUID, position string) ([]models.SocialLink, error)
@@ -63,4 +64,32 @@ func (r *socialLinkRepository) GetByProfileIDAndPosition(profilePublicID uuid.UU
 		Order("\"order\"").
 		Find(&socialLinks).Error
 	return socialLinks, err
+}
+
+func (r *socialLinkRepository) Update(profilePublicID uuid.UUID, position string, socialLinks []models.SocialLink) error {
+	tx := config.DB.Begin()
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+	if err := tx.Where("profile_public_id = ? AND position = ?", profilePublicID, position).
+		Delete(&models.SocialLink{}).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	for i := range socialLinks {
+		if socialLinks[i].PublicID == uuid.Nil {
+			socialLinks[i].PublicID = uuid.New()
+		}
+		socialLinks[i].CreatedAt = time.Now()
+	}
+
+	if err := tx.Create(&socialLinks).Error; err != nil {
+		tx.Rollback()
+		return err
+	}
+
+	return tx.Commit().Error
 }

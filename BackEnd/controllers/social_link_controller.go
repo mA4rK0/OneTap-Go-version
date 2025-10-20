@@ -75,3 +75,39 @@ func (c *SocialLinkController) GetSocialLinks(ctx *fiber.Ctx) error {
 		SocialLinks:     socialLinksResponse,
 	})
 }
+
+func (c *SocialLinkController) UpdateSocialLinks(ctx *fiber.Ctx) error {
+	profileID := ctx.Params("profileId")
+	profilePublicID, err := uuid.Parse(profileID)
+	if err != nil {
+		return utils.BadRequest(ctx, "Invalid profile ID", err.Error())
+	}
+
+	req := new(models.SocialLinksRequest)
+	if err := ctx.BodyParser(req); err != nil {
+		return utils.BadRequest(ctx, "Failed to parse request", err.Error())
+	}
+
+	if len(req.SocialLinks) == 0 {
+		return utils.BadRequest(ctx, "Social links cannot be empty", "social_links array is required")
+	}
+
+	if err := c.service.UpdateSocialLinks(profilePublicID, req); err != nil {
+		return utils.BadRequest(ctx, "Failed to update social links", err.Error())
+	}
+
+	socialLinks, err := c.service.GetSocialLinks(profilePublicID, req.Position)
+	if err != nil {
+		return utils.InternalServerError(ctx, "Failed to retrieve social links", err.Error())
+	}
+
+	var socialLinksResponse []models.SocialLinkResponse
+	if err := copier.Copy(&socialLinksResponse, &socialLinks); err != nil {
+		return utils.InternalServerError(ctx, "Error processing data", err.Error())
+	}
+
+	return utils.Success(ctx, "Social links successfully updated", models.SocialLinksResponse{
+		ProfilePublicID: profilePublicID,
+		SocialLinks:     socialLinksResponse,
+	})
+}
