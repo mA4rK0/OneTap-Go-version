@@ -10,3 +10,10 @@ type Bio struct {
 	Description     string    `json:"description" db:"description"`
 	Active          bool      `json:"active" db:"active"`
 }
+
+type BioResponse struct {
+	ProfilePublicID uuid.UUID   `json:"profile_public_id"`
+	PublicID        uuid.UUID `json:"public_id"`
+	Description     string    `json:"description"`
+	Active          bool      `json:"active"`
+}

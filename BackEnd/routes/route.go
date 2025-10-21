@@ -15,6 +15,7 @@ func Setup(app *fiber.App,
 	uc *controllers.UserController,
 	pc *controllers.ProfileController,
 	sc *controllers.SocialLinkController,
+	bc *controllers.BioController,
 	) {
 	err := godotenv.Load()
 	if err != nil {
@@ -32,7 +33,6 @@ func Setup(app *fiber.App,
 	}))
 
 	userGroup := api.Group("/users")
-	// userGroup.Get("/page", uc.GetUserPagination)
 	userGroup.Get("/:id", uc.GetUser)
 	userGroup.Put("/:id", uc.UpdateUser)
 	userGroup.Delete("/:id", uc.DeleteUser)
@@ -41,13 +41,11 @@ func Setup(app *fiber.App,
 	profileGroup.Post("/", pc.CreateProfile)
 	profileGroup.Put("/:id", pc.UpdateProfile)
 	profileGroup.Get("/:id", pc.GetProfile)
+
 	profileGroup.Post("/:profileId/social-links", sc.CreateSocialLinks)
 	profileGroup.Get("/:profileId/social-links", sc.GetSocialLinks)
 	profileGroup.Put("/:profileId/social-links", sc.UpdateSocialLinks)
 	profileGroup.Delete("/:profileId/social-links", sc.DeleteSocialLinks)
 
-	// boardGroup.Post("/", bc.CreateBoard)
-	// boardGroup.Put("/:id", bc.UpdateBoard)
-	// boardGroup.Post("/:id/members", bc.AddBoardMembers)
-	// boardGroup.Delete("/:id/members", bc.RemoveBoardMembers)
+	profileGroup.Post("/:profileId/bio", bc.CreateBio)
 }
