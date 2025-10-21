@@ -13,6 +13,7 @@ type SocialLinkService interface{
 	CreateSocialLinks (profilePublicID uuid.UUID, req *models.SocialLinksRequest) error
 	UpdateSocialLinks(profilePublicID uuid.UUID, req *models.SocialLinksRequest) error
 	GetSocialLinks(profilePublicID uuid.UUID, position string) ([]models.SocialLink, error)
+	DeleteSocialLinks(profilePublicID uuid.UUID, position string) error
 }
 
 type socialLinkService struct {
@@ -87,4 +88,11 @@ func (s *socialLinkService) UpdateSocialLinks(profilePublicID uuid.UUID, req *mo
 		})
 	}
 	return s.socialLinkRepo.Update(profilePublicID, req.Position, socialLinks)
+}
+
+func (s *socialLinkService) DeleteSocialLinks(profilePublicID uuid.UUID, position string) error {
+	if position != "" {
+		return s.socialLinkRepo.DeleteByProfileIDAndPosition(profilePublicID, position)
+	}
+	return s.socialLinkRepo.DeleteByProfileID(profilePublicID)
 }

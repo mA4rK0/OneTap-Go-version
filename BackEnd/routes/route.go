@@ -44,6 +44,7 @@ func Setup(app *fiber.App,
 	profileGroup.Post("/:profileId/social-links", sc.CreateSocialLinks)
 	profileGroup.Get("/:profileId/social-links", sc.GetSocialLinks)
 	profileGroup.Put("/:profileId/social-links", sc.UpdateSocialLinks)
+	profileGroup.Delete("/:profileId/social-links", sc.DeleteSocialLinks)
 
 	// boardGroup.Post("/", bc.CreateBoard)
 	// boardGroup.Put("/:id", bc.UpdateBoard)

@@ -111,3 +111,19 @@ func (c *SocialLinkController) UpdateSocialLinks(ctx *fiber.Ctx) error {
 		SocialLinks:     socialLinksResponse,
 	})
 }
+
+func (c *SocialLinkController) DeleteSocialLinks(ctx *fiber.Ctx) error {
+	profileID := ctx.Params("profileId")
+	profilePublicID, err := uuid.Parse(profileID)
+	if err != nil {
+		return utils.BadRequest(ctx, "Invalid profile ID", err.Error())
+	}
+
+	position := ctx.Query("position", "")
+
+	if err := c.service.DeleteSocialLinks(profilePublicID, position); err != nil {
+		return utils.BadRequest(ctx, "Failed to delete social links", err.Error())
+	}
+
+	return utils.Success(ctx, "Social links successfully deleted", nil)
+}

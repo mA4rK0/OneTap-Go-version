@@ -14,6 +14,8 @@ type SocialLinkRepository interface{
 	Update(profilePublicID uuid.UUID, position string, socialLinks []models.SocialLink) error
 	CheckExists(profilePublicID uuid.UUID, position string) (bool, error)
 	GetByProfileID(profilePublicID uuid.UUID) ([]models.SocialLink, error)
+	DeleteByProfileID(profilePublicID uuid.UUID) error
+	DeleteByProfileIDAndPosition(profilePublicID uuid.UUID, position string) error
 	GetByProfileIDAndPosition(profilePublicID uuid.UUID, position string) ([]models.SocialLink, error)
 }
 
@@ -92,4 +94,14 @@ func (r *socialLinkRepository) Update(profilePublicID uuid.UUID, position string
 	}
 
 	return tx.Commit().Error
+}
+
+func (r *socialLinkRepository) DeleteByProfileID(profilePublicID uuid.UUID) error {
+	return config.DB.Where("profile_public_id = ?", profilePublicID).
+		Delete(&models.SocialLink{}).Error
+}
+
+func (r *socialLinkRepository) DeleteByProfileIDAndPosition(profilePublicID uuid.UUID, position string) error {
+	return config.DB.Where("profile_public_id = ? AND position = ?", profilePublicID, position).
+		Delete(&models.SocialLink{}).Error
 }
