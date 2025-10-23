@@ -7,6 +7,7 @@ import (
 
 type BioRepository interface{
 	Create(bio *models.Bio) error
+	Update(bio *models.Bio) error
 	FindByPublicID (publicID string) (*models.Bio, error)
 }
 
@@ -18,6 +19,13 @@ func NewBioRepository() BioRepository {
 
 func (r *bioRepository) Create(bio *models.Bio) error {
 	return config.DB.Create(bio).Error
+}
+
+func (r *bioRepository) Update(bio *models.Bio) error {
+	return config.DB.Model(&models.Bio{}).Where("public_id = ?", bio.PublicID).Updates(map[string]interface{}{
+		"description": bio.Description,
+		"active": bio.Active,
+	}).Error
 }
 
 func (r *bioRepository) FindByPublicID (publicID string) (*models.Bio, error) {

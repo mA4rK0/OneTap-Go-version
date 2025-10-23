@@ -10,6 +10,8 @@ import (
 
 type BioService interface{
 	CreateBio(bio *models.Bio) error
+	UpdateBio(bio *models.Bio) error
+	GetByPublicID (publicID string) (*models.Bio, error)
 }
 
 type bioService struct {
@@ -33,4 +35,12 @@ func (s *bioService) CreateBio(bio *models.Bio) error {
 	bio.PublicID = uuid.New()
 	bio.ProfileID = profile.InternalID
 	return s.bioRepo.Create(bio)
+}
+
+func (s *bioService) UpdateBio(bio *models.Bio) error {
+	return s.bioRepo.Update(bio)
+}
+
+func (s *bioService) GetByPublicID (publicID string) (*models.Bio, error) {
+	return s.bioRepo.FindByPublicID(publicID)
 }

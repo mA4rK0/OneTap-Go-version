@@ -33,12 +33,6 @@ func main() {
 	bioService := services.NewBioService(bioRepo, profileRepo)
 	bioController := controllers.NewBioController(bioService)
 
-	// boardRepo := repositories.NewBoardRepository()
-	// boardMemberRepo := repositories.NewBoardMemberRepository()
-	// boardService := services.NewBoardService(boardRepo, userRepo, boardMemberRepo)
-	// boardController := controllers.NewBoardController(boardService)
-
-	// routes.Setup(app, userController, boardController)
 	routes.Setup(app, userController, profileController, socialLinkController, bioController)
 
 	port := config.AppConfig.AppPort

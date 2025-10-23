@@ -41,3 +41,34 @@ func (c *BioController) CreateBio(ctx *fiber.Ctx) error {
 	}
 	return utils.Success(ctx, "Bio successfully created", bioResp)
 }
+
+func (c *BioController) UpdateBio(ctx *fiber.Ctx) error {
+	publicID := ctx.Params("id")
+	bio := new(models.Bio)
+
+	if err := ctx.BodyParser(bio); err != nil {
+		return utils.BadRequest(ctx, "Failed parsing data", err.Error())
+	}
+	if _, err := uuid.Parse(publicID); err != nil {
+		return utils.BadRequest(ctx, "ID not valid", err.Error())
+	}
+
+	existingBio, err := c.service.GetByPublicID(publicID)
+	if err != nil {
+		return utils.NotFound(ctx, "Profile not found", err.Error())
+	}
+	bio.InternalID = existingBio.InternalID
+	bio.PublicID = existingBio.PublicID
+	bio.ProfileID = existingBio.ProfileID
+	bio.ProfilePublicID = existingBio.ProfilePublicID
+
+	if err := c.service.UpdateBio(bio); err != nil {
+		return utils.BadRequest(ctx, "Failed update profile", err.Error())
+	}
+
+	var bioResp models.BioResponse
+	if err := copier.Copy(&bioResp, bio); err != nil {
+		return utils.InternalServerError(ctx, "Error processing data", err.Error())
+	} 
+	return utils.Success(ctx, "Successfully update profile", bioResp)
+}
