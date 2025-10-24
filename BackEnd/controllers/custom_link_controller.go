@@ -51,3 +51,39 @@ func (c *CustomLinkController) CreateCustomLinks (ctx *fiber.Ctx) error {
 		Links: customLinksResponse,
 	})
 }
+
+func (c *CustomLinkController) UpdateCustomLinks(ctx *fiber.Ctx) error {
+	profileID := ctx.Params("profileId")
+	profilePublicID, err := uuid.Parse(profileID)
+	if err != nil {
+		return utils.BadRequest(ctx, "Invalid profile ID", err.Error())
+	}
+
+	req := new(models.CustomLinksRequest)
+	if err := ctx.BodyParser(req); err != nil {
+		return utils.BadRequest(ctx, "Failed to parse request", err.Error())
+	}
+
+	if len(req.Links) == 0 {
+		return utils.BadRequest(ctx, "Links cannot be empty", "links array is required")
+	}
+
+	if err := c.service.UpdateCustomLinks(profilePublicID, req); err != nil {
+		return utils.BadRequest(ctx, "Failed to update custom links", err.Error())
+	}
+
+	customLinks, err := c.service.GetCustomLinks(profilePublicID)
+	if err != nil {
+		return utils.InternalServerError(ctx, "Failed to retrieve custom links", err.Error())
+	}
+
+	var customLinksResponse []models.CustomLinkResponse
+	if err := copier.Copy(&customLinksResponse, &customLinks); err != nil {
+		return utils.InternalServerError(ctx, "Error processing data", err.Error())
+	}
+
+	return utils.Success(ctx, "Custom links successfully updated", models.CustomLinksResponse{
+		ProfilePublicID: profilePublicID,
+		Links: customLinksResponse,
+	})
+}

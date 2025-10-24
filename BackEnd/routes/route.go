@@ -53,4 +53,5 @@ func Setup(app *fiber.App,
 	profileGroup.Get("/:id/bio", bc.GetBio)
 
 	profileGroup.Post("/:profileId/custom-links", clc.CreateCustomLinks)
+	profileGroup.Put("/:profileId/custom-links", clc.UpdateCustomLinks)
 }
