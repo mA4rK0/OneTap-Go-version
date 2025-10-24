@@ -16,6 +16,7 @@ func Setup(app *fiber.App,
 	pc *controllers.ProfileController,
 	sc *controllers.SocialLinkController,
 	bc *controllers.BioController,
+	clc *controllers.CustomLinkController,
 	) {
 	err := godotenv.Load()
 	if err != nil {
@@ -50,4 +51,6 @@ func Setup(app *fiber.App,
 	profileGroup.Post("/:profileId/bio", bc.CreateBio)
 	profileGroup.Put("/:id/bio", bc.UpdateBio)
 	profileGroup.Get("/:id/bio", bc.GetBio)
+
+	profileGroup.Post("/:profileId/custom-links", clc.CreateCustomLinks)
 }

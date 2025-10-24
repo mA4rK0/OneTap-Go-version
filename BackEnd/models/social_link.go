@@ -33,7 +33,6 @@ type SocialLinkItemRequest struct {
 
 type SocialLinkResponse struct {
 	PublicID        uuid.UUID `json:"public_id"`
-	ProfilePublicID uuid.UUID `json:"profile_public_id"`
 	Position        string    `json:"position"`
 	Icon            string    `json:"icon"`
 	Url             string    `json:"url"`

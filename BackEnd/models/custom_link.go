@@ -17,3 +17,28 @@ type CustomLink struct {
 	Order      uint64   `json:"order" db:"order"`
 	CreatedAt time.Time `json:"created_at" db:"created_at"`
 }
+
+type CustomLinksRequest struct {
+	Links []CustomLinkRequest `json:"links"`
+}
+
+type CustomLinkRequest struct {
+	Url        string   `json:"url"`
+	TagLine    string   `json:"tag_line"`
+	Active     bool     `json:"active"`
+	Order      uint64   `json:"order"`
+}
+
+type CustomLinkResponse struct {
+	PublicID   uuid.UUID `json:"public_id"`
+	Url        string   `json:"url"`
+	TagLine    string   `json:"tag_line"`
+	Active     bool     `json:"active"`
+	Order      uint64   `json:"order"`
+	CreatedAt time.Time `json:"created_at"`
+}
+
+type CustomLinksResponse struct {
+	ProfilePublicID uuid.UUID `json:"profile_public_id"`
+	Links []CustomLinkResponse `json:"links"`
+}

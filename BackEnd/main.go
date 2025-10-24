@@ -33,7 +33,11 @@ func main() {
 	bioService := services.NewBioService(bioRepo, profileRepo)
 	bioController := controllers.NewBioController(bioService)
 
-	routes.Setup(app, userController, profileController, socialLinkController, bioController)
+	customLinkRepo := repositories.NewCustomLinkRepository()
+	customLinkService := services.NewCustomLinkService(customLinkRepo, profileRepo)
+	customLinkController := controllers.NewCustomLinkController(customLinkService)
+
+	routes.Setup(app, userController, profileController, socialLinkController, bioController, customLinkController)
 
 	port := config.AppConfig.AppPort
 	log.Println("Server running on port :", port)
