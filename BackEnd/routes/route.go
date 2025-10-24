@@ -49,4 +49,5 @@ func Setup(app *fiber.App,
 
 	profileGroup.Post("/:profileId/bio", bc.CreateBio)
 	profileGroup.Put("/:id/bio", bc.UpdateBio)
+	profileGroup.Get("/:id/bio", bc.GetBio)
 }

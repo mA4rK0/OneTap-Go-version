@@ -72,3 +72,18 @@ func (c *BioController) UpdateBio(ctx *fiber.Ctx) error {
 	} 
 	return utils.Success(ctx, "Successfully update profile", bioResp)
 }
+
+func (c *BioController) GetBio (ctx *fiber.Ctx) error {
+	id := ctx.Params("id")
+	bio, err := c.service.GetByPublicID(id)
+	if err != nil {
+		return utils.NotFound(ctx, "Data Not Found", err.Error())
+	}
+
+	var useResp models.BioResponse
+	err = copier.Copy(&useResp, &bio)
+	if err != nil {
+		return utils.BadRequest(ctx, "Internal Server Error", err.Error())
+	}
+	return utils.Success(ctx, "Successfully Get Data", useResp)
+}
