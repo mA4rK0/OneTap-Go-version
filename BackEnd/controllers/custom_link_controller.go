@@ -87,3 +87,26 @@ func (c *CustomLinkController) UpdateCustomLinks(ctx *fiber.Ctx) error {
 		Links: customLinksResponse,
 	})
 }
+
+func (c *CustomLinkController) GetCustomLinks(ctx *fiber.Ctx) error {
+	profileID := ctx.Params("profileId")
+	profilePublicID, err := uuid.Parse(profileID)
+	if err != nil {
+		return utils.BadRequest(ctx, "Invalid profile ID", err.Error())
+	}
+
+	customLinks, err := c.service.GetCustomLinks(profilePublicID)
+	if err != nil {
+		return utils.InternalServerError(ctx, "Failed to get social links", err.Error())
+	}
+
+	var customLinksResponse []models.CustomLinkResponse
+	if err := copier.Copy(&customLinksResponse, &customLinks); err != nil {
+		return utils.InternalServerError(ctx, "Error processing data", err.Error())
+	}
+
+	return utils.Success(ctx, "Custom links retrieved successfully", models.CustomLinksResponse{
+		ProfilePublicID: profilePublicID,
+		Links: customLinksResponse,
+	})
+}
