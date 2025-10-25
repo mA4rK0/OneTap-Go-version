@@ -11,6 +11,7 @@ import (
 type CustomLinkService interface{
 	CreateCustomLinks(profilePublicID uuid.UUID, req *models.CustomLinksRequest) error
 	UpdateCustomLinks(profilePublicID uuid.UUID, req *models.CustomLinksRequest) error
+	DeleteCustomLinks(profilePublicID uuid.UUID) error
 	GetCustomLinks(profilePublicID uuid.UUID) ([]models.CustomLink, error)
 }
 
@@ -77,4 +78,8 @@ func (s *customLinkService) UpdateCustomLinks(profilePublicID uuid.UUID, req *mo
 
 func (s *customLinkService) GetCustomLinks(profilePublicID uuid.UUID) ([]models.CustomLink, error) {
 	return s.customLinkRepo.GetByProfileID(profilePublicID)
+}
+
+func (s *customLinkService) DeleteCustomLinks(profilePublicID uuid.UUID) error {
+	return s.customLinkRepo.DeleteByProfileID(profilePublicID)
 }

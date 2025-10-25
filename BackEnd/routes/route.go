@@ -55,4 +55,5 @@ func Setup(app *fiber.App,
 	profileGroup.Post("/:profileId/custom-links", clc.CreateCustomLinks)
 	profileGroup.Put("/:profileId/custom-links", clc.UpdateCustomLinks)
 	profileGroup.Get("/:profileId/custom-links", clc.GetCustomLinks)
+	profileGroup.Delete("/:profileId/custom-links", clc.DeleteCustomLinks)
 }

@@ -12,6 +12,7 @@ import (
 type CustomLinkRepository interface{
 	Create(profilePublicID uuid.UUID, customLinks []models.CustomLink) error
 	Update(profilePublicID uuid.UUID, customLinks []models.CustomLink) error
+	DeleteByProfileID(profilePublicID uuid.UUID) error
 	CheckExists(profilePublicID uuid.UUID) (bool, error)
 	GetByProfileID(profilePublicID uuid.UUID) ([]models.CustomLink, error)
 }
@@ -83,4 +84,9 @@ func (r *customLinkRepository) GetByProfileID(profilePublicID uuid.UUID) ([]mode
 		Order("\"order\"").
 		Find(&customLinks).Error
 	return customLinks, err
+}
+
+func (r *customLinkRepository) DeleteByProfileID(profilePublicID uuid.UUID) error {
+	return config.DB.Where("profile_public_id = ?", profilePublicID).
+		Delete(&models.CustomLink{}).Error
 }

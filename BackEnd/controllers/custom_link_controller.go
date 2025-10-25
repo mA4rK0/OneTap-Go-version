@@ -110,3 +110,16 @@ func (c *CustomLinkController) GetCustomLinks(ctx *fiber.Ctx) error {
 		Links: customLinksResponse,
 	})
 }
+
+func (c *CustomLinkController) DeleteCustomLinks(ctx *fiber.Ctx) error {
+	profileID := ctx.Params("profileId")
+	profilePublicID, err := uuid.Parse(profileID)
+	if err != nil {
+		return utils.BadRequest(ctx, "Invalid profile ID", err.Error())
+	}
+
+	if err := c.service.DeleteCustomLinks(profilePublicID); err != nil {
+		return utils.BadRequest(ctx, "Failed to delete custom links", err.Error())
+	}
+	return utils.Success(ctx, "Custom links successfully deleted", nil)
+}
