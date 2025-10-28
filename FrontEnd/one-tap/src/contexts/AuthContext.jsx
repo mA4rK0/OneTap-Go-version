@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 import auth from '@/services/api/auth';
 import profile from '@/services/api/profile';
