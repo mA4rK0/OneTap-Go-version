@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Description, Link, Palette, Person, Share } from '@mui/icons-material';
 import {
   Box,
   Drawer,
@@ -9,10 +9,10 @@ import {
   ListItemText,
   Toolbar,
   Typography,
-  useTheme,
   useMediaQuery,
+  useTheme,
 } from '@mui/material';
-import { Person, Link, Share, Palette, Description } from '@mui/icons-material';
+import { useState } from 'react';
 
 const drawerWidth = 240;
 

@@ -1,6 +1,7 @@
 import { Box } from '@mui/material';
-import Header from '../Header';
+
 import Footer from '../Footer';
+import Header from '../Header';
 
 const Layout = ({ children }) => {
   return (
@@ -9,6 +10,8 @@ const Layout = ({ children }) => {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100vh',
+        background:
+          'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%)',
       }}
     >
       <Header />
@@ -16,7 +19,6 @@ const Layout = ({ children }) => {
         component="main"
         sx={{
           flexGrow: 1,
-          py: 3,
         }}
       >
         {children}

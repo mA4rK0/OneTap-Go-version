@@ -1,6 +1,15 @@
-import { Box, Container, Typography, Link, Divider } from '@mui/material';
+import {
+  Box,
+  Container,
+  Divider,
+  Link,
+  Typography,
+  useTheme,
+} from '@mui/material';
 
 const Footer = () => {
+  const theme = useTheme();
+
   return (
     <Box
       component="footer"
@@ -8,14 +17,14 @@ const Footer = () => {
         py: 3,
         px: 2,
         mt: 'auto',
-        backgroundColor: (theme) =>
-          theme.palette.mode === 'light'
-            ? theme.palette.grey[200]
-            : theme.palette.grey[800],
+        backgroundColor: theme.palette.background.paper,
+        backdropFilter: 'blur(20px)',
+        borderTop: `1px solid ${theme.palette.divider}`,
+        color: theme.palette.text.secondary,
       }}
     >
       <Container maxWidth="lg">
-        <Divider sx={{ mb: 2 }} />
+        <Divider sx={{ mb: 2, borderColor: theme.palette.divider }} />
         <Box
           sx={{
             display: 'flex',
@@ -25,7 +34,7 @@ const Footer = () => {
             gap: 2,
           }}
         >
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2">
             © {new Date().getFullYear()} OneTap. All rights reserved.
           </Typography>
 
@@ -33,24 +42,39 @@ const Footer = () => {
             <Link
               href="#"
               variant="body2"
-              color="text.secondary"
               underline="hover"
+              sx={{
+                color: 'inherit',
+                '&:hover': {
+                  color: theme.palette.primary.main,
+                },
+              }}
             >
               Privacy Policy
             </Link>
             <Link
               href="#"
               variant="body2"
-              color="text.secondary"
               underline="hover"
+              sx={{
+                color: 'inherit',
+                '&:hover': {
+                  color: theme.palette.primary.main,
+                },
+              }}
             >
               Terms of Service
             </Link>
             <Link
               href="#"
               variant="body2"
-              color="text.secondary"
               underline="hover"
+              sx={{
+                color: 'inherit',
+                '&:hover': {
+                  color: theme.palette.primary.main,
+                },
+              }}
             >
               Contact
             </Link>

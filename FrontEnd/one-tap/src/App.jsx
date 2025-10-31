@@ -1,34 +1,70 @@
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
-import { createBrowserRouter, RouterProvider } from 'react-router';
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from 'react-router-dom';
 
-import sidebarLoader from './components/layouts/SidebarLayout/SidebarLayout.loader';
+import Layout from './components/layouts/Layout';
+import { AuthProvider } from './contexts/AuthContext';
+import { ThemeProvider } from './contexts/ThemeContext';
+import Login from './pages/Auth/Login';
+import Signup from './pages/Auth/Signup';
+import Dashboard from './pages/Dashboard';
+import Home from './pages/Home';
+import PublicProfile from './pages/PublicProfile';
+import './styles/global.css';
 
-const theme = createTheme({
-  typography: {
-    fontFamily: ['Roboto', 'sans-serif'].join(','),
-  },
-});
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem('access_token');
+  return token ? children : <Navigate to="/login" />;
+};
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    // loader: sidebarLoader,
-    // element: <Dashboard />,
-  },
-  {
-    path: '/dashboard',
-    loader: sidebarLoader,
-    element: <Dashboard />,
-  },
-]);
+const PublicRoute = ({ children }) => {
+  const token = localStorage.getItem('access_token');
+  return !token ? children : <Navigate to="/dashboard" />;
+};
 
-const App = () => {
+function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <RouterProvider router={router} />
+    <ThemeProvider>
+      <AuthProvider>
+        <Router>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/login"
+                element={
+                  <PublicRoute>
+                    <Login />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="/signup"
+                element={
+                  <PublicRoute>
+                    <Signup />
+                  </PublicRoute>
+                }
+              />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path="/:username" element={<PublicProfile />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </Layout>
+        </Router>
+      </AuthProvider>
     </ThemeProvider>
   );
-};
+}
 
 export default App;

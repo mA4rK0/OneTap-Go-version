@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Alert, Box, Link, Typography } from '@mui/material';
+import { Alert, Box, Container, Link, Paper, Typography } from '@mui/material';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -33,75 +33,103 @@ const Signup = () => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
-      <FormInput
-        register={register}
-        errors={errors}
-        name="name"
-        label="Full Name"
-        autoComplete="name"
-        required
-      />
-
-      <FormInput
-        register={register}
-        errors={errors}
-        name="email"
-        label="Email Address"
-        type="email"
-        autoComplete="email"
-        required
-        sx={{ mt: 2 }}
-      />
-
-      <FormInput
-        register={register}
-        errors={errors}
-        name="password"
-        label="Password"
-        type="password"
-        autoComplete="new-password"
-        required
-        sx={{ mt: 2 }}
-      />
-
-      <FormInput
-        register={register}
-        errors={errors}
-        name="confirmPassword"
-        label="Confirm Password"
-        type="password"
-        autoComplete="new-password"
-        required
-        sx={{ mt: 2 }}
-      />
-
-      {submitError && (
-        <Alert severity="error" sx={{ mt: 2 }}>
-          {submitError}
-        </Alert>
-      )}
-
-      <LoadingButton
-        type="submit"
-        loading={isSubmitting}
-        variant="contained"
-        fullWidth
-        sx={{ mt: 3, mb: 2 }}
-        size="large"
+    <Container component="main" maxWidth="sm">
+      <Box
+        sx={{
+          marginTop: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
       >
-        Sign Up
-      </LoadingButton>
+        <Paper
+          elevation={3}
+          sx={{
+            padding: 4,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
+          <Typography component="h1" variant="h4" gutterBottom>
+            Create Account
+          </Typography>
+          <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+            Join OneTap today
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
+            <FormInput
+              register={register}
+              errors={errors}
+              name="name"
+              label="Full Name"
+              autoComplete="name"
+              required
+            />
 
-      <Box sx={{ textAlign: 'center' }}>
-        <Typography variant="body2" color="text.secondary">
-          Already have an account?{' '}
-          <Link href="/login" variant="body2">
-            Sign in
-          </Link>
-        </Typography>
+            <FormInput
+              register={register}
+              errors={errors}
+              name="email"
+              label="Email Address"
+              type="email"
+              autoComplete="email"
+              required
+              sx={{ mt: 2 }}
+            />
+
+            <FormInput
+              register={register}
+              errors={errors}
+              name="password"
+              label="Password"
+              type="password"
+              autoComplete="new-password"
+              required
+              sx={{ mt: 2 }}
+            />
+
+            <FormInput
+              register={register}
+              errors={errors}
+              name="confirmPassword"
+              label="Confirm Password"
+              type="password"
+              autoComplete="new-password"
+              required
+              sx={{ mt: 2 }}
+            />
+
+            {submitError && (
+              <Alert severity="error" sx={{ mt: 2 }}>
+                {submitError}
+              </Alert>
+            )}
+
+            <LoadingButton
+              type="submit"
+              loading={isSubmitting}
+              variant="contained"
+              fullWidth
+              sx={{ mt: 3, mb: 2 }}
+              size="large"
+            >
+              Sign Up
+            </LoadingButton>
+
+            <Box sx={{ textAlign: 'center' }}>
+              <Typography variant="body2" color="text.secondary">
+                Already have an account?{' '}
+                <Link href="/login" variant="body2">
+                  Sign in
+                </Link>
+              </Typography>
+            </Box>
+          </Box>
+        </Paper>
       </Box>
-    </Box>
+    </Container>
   );
 };
 
