@@ -147,7 +147,7 @@ const ThemeCustomizer = () => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} md={6}>
+      <Grid>
         <Card>
           <CardContent>
             <Typography variant="h5" component="h2" gutterBottom>
@@ -170,7 +170,7 @@ const ThemeCustomizer = () => {
             </FormControl>
 
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid>
                 <ColorPicker
                   label="Background Color"
                   value={theme.bg_colour}
@@ -178,7 +178,7 @@ const ThemeCustomizer = () => {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid>
                 <ColorPicker
                   label="Username Color"
                   value={theme.username_colour}
@@ -188,7 +188,7 @@ const ThemeCustomizer = () => {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid>
                 <ColorPicker
                   label="Button Background"
                   value={theme.btn_bg_colour}
@@ -198,7 +198,7 @@ const ThemeCustomizer = () => {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid>
                 <ColorPicker
                   label="Button Text"
                   value={theme.btn_text_colour}
@@ -208,7 +208,7 @@ const ThemeCustomizer = () => {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid>
                 <ColorPicker
                   label="Button Outline"
                   value={theme.btn_outline_colour}
@@ -218,7 +218,7 @@ const ThemeCustomizer = () => {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid>
                 <ColorPicker
                   label="Icon Color"
                   value={theme.icon_colour}
@@ -271,7 +271,7 @@ const ThemeCustomizer = () => {
         </Card>
       </Grid>
 
-      <Grid item xs={12} md={6}>
+      <Grid>
         <Card>
           <CardContent>
             <Typography variant="h5" component="h2" gutterBottom>

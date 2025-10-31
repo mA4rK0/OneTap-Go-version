@@ -112,7 +112,7 @@ const BioEditor = () => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} md={8}>
+      <Grid>
         <Card>
           <CardContent>
             <Typography variant="h5" component="h2" gutterBottom>
@@ -172,7 +172,7 @@ const BioEditor = () => {
         </Card>
       </Grid>
 
-      <Grid item xs={12} md={4}>
+      <Grid>
         <Card>
           <CardContent>
             <Typography variant="h6" gutterBottom>

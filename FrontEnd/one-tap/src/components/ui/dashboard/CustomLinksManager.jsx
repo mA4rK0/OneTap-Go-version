@@ -371,7 +371,7 @@ const CustomLinksManager = () => {
           sx={{ mb: 4 }}
         >
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid>
               <TextField
                 fullWidth
                 required
@@ -384,7 +384,7 @@ const CustomLinksManager = () => {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid>
               <TextField
                 fullWidth
                 id="tagline"
@@ -398,7 +398,7 @@ const CustomLinksManager = () => {
               />
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid>
               <FormControlLabel
                 control={<Switch defaultChecked {...register('active')} />}
                 label="Active"

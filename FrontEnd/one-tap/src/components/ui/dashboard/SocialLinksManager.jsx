@@ -357,7 +357,7 @@ const SocialLinksManager = () => {
           sx={{ mb: 4 }}
         >
           <Grid container spacing={2} alignItems="flex-end">
-            <Grid item xs={12} md={3}>
+            <Grid>
               <TextField
                 fullWidth
                 select
@@ -376,7 +376,7 @@ const SocialLinksManager = () => {
               </TextField>
             </Grid>
 
-            <Grid item xs={12} md={4}>
+            <Grid>
               <TextField
                 fullWidth
                 required
@@ -389,7 +389,7 @@ const SocialLinksManager = () => {
               />
             </Grid>
 
-            <Grid item xs={12} md={3}>
+            <Grid>
               <TextField
                 fullWidth
                 select
@@ -408,7 +408,7 @@ const SocialLinksManager = () => {
               </TextField>
             </Grid>
 
-            <Grid item xs={12} md={2}>
+            <Grid>
               <FormControlLabel
                 control={<Switch defaultChecked {...register('active')} />}
                 label="Active"

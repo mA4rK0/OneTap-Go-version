@@ -112,7 +112,7 @@ const ProfileForm = () => {
 
         <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
+            <Grid>
               <TextField
                 fullWidth
                 required
@@ -138,7 +138,7 @@ const ProfileForm = () => {
               />
             </Grid>
 
-            <Grid item xs={12} md={6}>
+            <Grid>
               <TextField
                 fullWidth
                 required
@@ -157,7 +157,7 @@ const ProfileForm = () => {
               </TextField>
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid>
               <TextField
                 fullWidth
                 id="avatar"

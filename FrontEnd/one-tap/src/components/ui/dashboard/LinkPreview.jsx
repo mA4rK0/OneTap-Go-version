@@ -74,7 +74,7 @@ const LinkPreview = () => {
         </Typography>
 
         <Grid container spacing={3} alignItems="center">
-          <Grid item xs={12} md={6}>
+          <Grid>
             <Box sx={{ mb: 2 }}>
               <Typography variant="body2" color="text.secondary" gutterBottom>
                 Your Profile URL:
@@ -121,7 +121,7 @@ const LinkPreview = () => {
             </Alert>
           </Grid>
 
-          <Grid item xs={12} md={6}>
+          <Grid>
             <Box sx={{ textAlign: 'center' }}>
               <Typography variant="body2" color="text.secondary" gutterBottom>
                 QR Code
