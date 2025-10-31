@@ -23,7 +23,6 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import bio from '@/services/api/bio';
-
 import { customLinkSchema } from '@/utils/validators';
 import { profileFormSchema } from '@/utils/validators';
 import { socialLinkSchema } from '@/utils/validators';
